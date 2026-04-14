@@ -11,25 +11,25 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>Hetk Hetkes</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap');
 
   :root {
-    --bg: #1a0f2e;
-    --bg2: #221540;
-    --bg3: #2d1a52;
+    --bg:      #1a0f2e;
+    --bg2:     #221540;
+    --bg3:     #2d1a52;
     --surface: #32205e;
-    --border: #4a2d7a;
-    --accent: #ff7a2f;
+    --border:  #4a2d7a;
+    --accent:  #ff7a2f;
     --accent2: #c97aff;
-    --text: #f0eaff;
-    --text2: #b09acc;
-    --text3: #7a6098;
-    --red: #ff5a5a;
-    --radius: 16px;
-    --radius-sm: 10px;
+    --text:    #f0eaff;
+    --text2:   #b09acc;
+    --text3:   #7a6098;
+    --red:     #ff5a5a;
+    --r:       16px;
+    --rsm:     10px;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
   html, body {
     height: 100%;
@@ -40,789 +40,297 @@
     user-select: none;
   }
 
-  /* ---- SCREENS ---- */
   .screen {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease;
+    position: fixed; inset: 0;
+    display: flex; flex-direction: column;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease;
   }
-  .screen.active {
-    opacity: 1;
-    pointer-events: all;
-  }
+  .screen.active { opacity: 1; pointer-events: all; }
 
-  /* ---- AVAKUVA ---- */
+  /* AVAKUVA */
   #screen-home {
     background: var(--bg);
     justify-content: space-between;
-    padding: env(safe-area-inset-top, 20px) 0 env(safe-area-inset-bottom, 20px) 0;
+    padding: env(safe-area-inset-top,20px) 0 env(safe-area-inset-bottom,20px) 0;
   }
-
   .home-header {
     padding: 28px 24px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    display: flex; justify-content: space-between; align-items: flex-start;
   }
-
   .app-title {
     font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text2);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: .15em; text-transform: uppercase; color: var(--text2);
   }
-
-  .idea-count {
-    font-size: 11px;
-    color: var(--text3);
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.05em;
-  }
-
+  .idea-count { font-size: 11px; color: var(--text3); letter-spacing: .05em; }
   .home-hero {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 0 24px;
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 12px;
   }
-
-  .hero-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text3);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  /* Suur püüa-nupp */
+  .hero-label { font-size: 11px; color: var(--text3); letter-spacing: .12em; text-transform: uppercase; }
   .capture-btn {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 2px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    position: relative;
-    overflow: hidden;
+    width: 140px; height: 140px; border-radius: 50%;
+    background: var(--surface); border: 2px solid var(--border);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 6px;
+    cursor: pointer; transition: all .15s ease;
   }
-
-  .capture-btn::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 50%;
-    background: conic-gradient(#ff7a2f 0deg, #c97aff 120deg, transparent 240deg, transparent 360deg);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 0;
-  }
-
-  .capture-btn:active::before { opacity: 1; }
-  .capture-btn:active { transform: scale(0.95); border-color: var(--accent); }
-
-  .capture-icon {
-    font-size: 36px;
-    z-index: 1;
-    line-height: 1;
-  }
-
+  .capture-btn:active { transform: scale(.95); border-color: var(--accent); }
+  .capture-icon { font-size: 36px; line-height: 1; }
   .capture-text {
-    font-family: 'Syne', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text2);
-    z-index: 1;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--text2);
   }
-
-
-
-  /* Alumine nav */
-  .home-nav {
-    padding: 0 24px 12px;
-    display: flex;
-    gap: 12px;
-  }
-
+  .home-nav { padding: 0 24px 12px; display: flex; gap: 12px; }
   .nav-btn {
-    flex: 1;
-    height: 48px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    font-family: 'Syne', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text2);
-    transition: all 0.15s;
+    flex: 1; height: 48px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--rsm);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    cursor: pointer; font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--text2); transition: all .15s;
   }
   .nav-btn:active { background: var(--bg3); border-color: var(--accent); color: var(--accent); }
-  .nav-btn .icon { font-size: 16px; }
 
-  /* ---- KAAMERA KUVA ---- */
-  #screen-camera {
-    background: #000;
-    position: relative;
+  /* KAAMERA */
+  #screen-camera { background: #000; position: relative; }
+  #video-preview { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cam-overlay {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: env(safe-area-inset-top,20px) 0 env(safe-area-inset-bottom,20px) 0;
   }
-
-  #video-preview {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  .cam-top { padding: 20px 24px; display: flex; justify-content: flex-end; }
+  .cam-close {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; cursor: pointer; color: #fff;
   }
-
-  .camera-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: env(safe-area-inset-top, 20px) 0 env(safe-area-inset-bottom, 20px) 0;
-  }
-
-  .camera-top {
-    padding: 20px 24px;
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .camera-close {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.5);
-    border: 1px solid rgba(255,255,255,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    cursor: pointer;
-    color: #fff;
-  }
-
-  .camera-bottom {
+  .cam-bottom {
     padding: 0 24px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
+    display: flex; align-items: center; justify-content: center; gap: 40px;
   }
-
   .shutter-btn {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: #fff;
-    border: 4px solid rgba(255,255,255,0.3);
-    cursor: pointer;
-    transition: transform 0.1s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.5);
+    width: 80px; height: 80px; border-radius: 50%;
+    background: #fff; border: 4px solid rgba(255,255,255,.4);
+    cursor: pointer; transition: transform .1s;
+    box-shadow: 0 0 0 2px rgba(255,255,255,.5);
   }
-  .shutter-btn:active { transform: scale(0.9); }
-  .shutter-btn-inner {
-    width: 62px;
-    height: 62px;
-    border-radius: 50%;
-    background: #fff;
-  }
-
+  .shutter-btn:active { transform: scale(.9); }
   .flip-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.5);
-    border: 1px solid rgba(255,255,255,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    cursor: pointer;
-    color: #fff;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; cursor: pointer; color: #fff;
   }
-
-  /* Flash effect */
   .flash {
-    position: fixed;
-    inset: 0;
-    background: #fff;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 999;
-    transition: opacity 0.05s;
+    position: fixed; inset: 0; background: #fff;
+    opacity: 0; pointer-events: none; z-index: 999; transition: opacity .05s;
   }
-  .flash.active { opacity: 1; }
+  .flash.on { opacity: 1; }
 
-  /* ---- SALVESTA KUVA ---- */
+  /* SALVESTA */
   #screen-save {
     background: var(--bg);
-    padding: env(safe-area-inset-top, 20px) 0 env(safe-area-inset-bottom, 20px) 0;
+    padding: env(safe-area-inset-top,20px) 0 env(safe-area-inset-bottom,20px) 0;
   }
-
   .save-header {
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    padding: 16px 24px; display: flex; align-items: center; gap: 12px;
   }
-
   .back-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    cursor: pointer;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; cursor: pointer;
   }
-
   .save-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text2);
+    font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--text2);
   }
-
-  .save-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  .save-body {
+    flex: 1; overflow-y: auto; padding: 0 24px;
+    display: flex; flex-direction: column; gap: 14px;
   }
-
   #captured-img {
-    width: 100%;
-    border-radius: var(--radius);
-    display: block;
-    max-height: 280px;
-    object-fit: cover;
-    border: 1px solid var(--border);
+    width: 100%; border-radius: var(--r); max-height: 300px;
+    object-fit: cover; border: 1px solid var(--border); display: block;
   }
-
-  /* Heli kontroll */
-  .audio-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  .audio-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 14px;
+    display: flex; flex-direction: column; gap: 10px;
   }
-
-  .audio-label {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text3);
-  }
-
-  .audio-controls {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
+  .audio-lbl { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--text3); }
+  .audio-row { display: flex; align-items: center; gap: 10px; }
   .rec-btn {
-    flex: 1;
-    height: 44px;
-    border-radius: var(--radius-sm);
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    font-family: 'Syne', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text2);
-    transition: all 0.15s;
+    flex: 1; height: 44px; border-radius: var(--rsm);
+    background: var(--bg3); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    cursor: pointer; font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text2); transition: all .15s;
   }
-
   .rec-btn.recording {
-    background: rgba(240, 96, 96, 0.15);
-    border-color: var(--red);
-    color: var(--red);
-    animation: pulse-border 1.5s ease infinite;
+    background: rgba(255,90,90,.12); border-color: var(--red); color: var(--red);
+    animation: pulse 1.5s ease infinite;
   }
-
-  .rec-btn.has-audio {
-    border-color: var(--accent2);
-    color: var(--accent2);
+  .rec-btn.done { border-color: var(--accent2); color: var(--accent2); }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(255,90,90,.3); }
+    50%      { box-shadow: 0 0 0 6px rgba(255,90,90,0); }
   }
-
-  @keyframes pulse-border {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(240,96,96,0.3); }
-    50% { box-shadow: 0 0 0 6px rgba(240,96,96,0); }
-  }
-
-  .rec-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: currentColor;
-  }
-  .rec-btn.recording .rec-dot {
-    animation: blink 1s step-end infinite;
-  }
+  .rec-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+  .rec-btn.recording .rec-dot { animation: blink 1s step-end infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
+  .rec-timer {
+    font-size: 11px; color: var(--red); letter-spacing: .1em; min-width: 38px; text-align: center;
+  }
   .play-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-sm);
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    cursor: pointer;
-    color: var(--text2);
-    transition: all 0.15s;
+    width: 44px; height: 44px; border-radius: var(--rsm);
+    background: var(--bg3); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; cursor: pointer; color: var(--text2); transition: all .15s;
   }
   .play-btn:active { border-color: var(--accent2); color: var(--accent2); }
-  .play-btn.hidden { display: none; }
-
-  .rec-timer {
-    font-size: 11px;
-    color: var(--red);
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.1em;
-    min-width: 40px;
-    text-align: center;
-  }
-  .rec-timer.hidden { display: none; }
-
-
-
-  /* Salvesta nupp */
-  .save-actions {
-    padding: 16px 24px;
-    display: flex;
-    gap: 10px;
-  }
-
+  .hidden { display: none !important; }
+  .save-actions { padding: 14px 24px; display: flex; gap: 10px; }
   .btn-save {
-    flex: 1;
-    height: 52px;
-    border-radius: var(--radius);
-    background: linear-gradient(135deg, #ff7a2f 0%, #ff5a00 100%);
-    border: none;
-    color: #fff;
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.15s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    flex: 1; height: 52px; border-radius: var(--r);
+    background: linear-gradient(135deg, #ff7a2f, #ff5000);
+    border: none; color: #fff; font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+    cursor: pointer; transition: all .15s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
   }
-  .btn-save:active { transform: scale(0.97); opacity: 0.9; }
-
+  .btn-save:active { transform: scale(.97); opacity: .9; }
   .btn-discard {
-    width: 52px;
-    height: 52px;
-    border-radius: var(--radius);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text3);
-    font-size: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
+    width: 52px; height: 52px; border-radius: var(--r);
+    background: var(--surface); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; cursor: pointer; color: var(--text3); transition: all .15s;
   }
   .btn-discard:active { border-color: var(--red); color: var(--red); }
 
-  /* ---- GALERII KUVA ---- */
+  /* GALERII */
   #screen-gallery {
     background: var(--bg);
-    padding: env(safe-area-inset-top, 20px) 0 env(safe-area-inset-bottom, 20px) 0;
-    display: flex;
-    flex-direction: column;
+    padding: env(safe-area-inset-top,20px) 0 env(safe-area-inset-bottom,20px) 0;
+    display: flex; flex-direction: column;
   }
-
   .gallery-header {
-    padding: 20px 24px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 20px 24px 14px; display: flex; align-items: center; justify-content: space-between;
   }
-
-  .gallery-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    color: var(--text);
-  }
-
-  .gallery-count {
-    font-size: 11px;
-    color: var(--text3);
-    letter-spacing: 0.05em;
-  }
-
+  .gallery-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; }
+  .gallery-count { font-size: 11px; color: var(--text3); }
   .gallery-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0 24px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex: 1; overflow-y: auto; padding: 0 24px 12px;
+    display: flex; flex-direction: column; gap: 10px;
   }
-
   .gallery-empty {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    color: var(--text3);
-    padding: 48px;
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 12px; color: var(--text3); padding: 48px; text-align: center;
   }
-  .gallery-empty .empty-icon { font-size: 40px; opacity: 0.4; }
-  .gallery-empty .empty-text { font-size: 13px; text-align: center; line-height: 1.6; }
-
-  /* Idee kaart */
+  .empty-icon { font-size: 40px; opacity: .35; }
+  .empty-text { font-size: 13px; line-height: 1.6; }
   .idea-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    cursor: pointer;
-    transition: border-color 0.15s;
-    display: flex;
-    align-items: stretch;
-    min-height: 72px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); overflow: hidden; cursor: pointer;
+    display: flex; align-items: stretch; min-height: 72px; transition: border-color .15s;
   }
   .idea-card:active { border-color: var(--accent2); }
-
-  .card-thumb {
-    width: 72px;
-    min-height: 72px;
-    flex-shrink: 0;
-    object-fit: cover;
-    display: block;
+  .card-thumb { width: 72px; min-height: 72px; flex-shrink: 0; object-fit: cover; display: block; }
+  .card-thumb-empty {
+    width: 72px; min-height: 72px; flex-shrink: 0;
+    background: var(--bg3); display: flex; align-items: center; justify-content: center; font-size: 22px;
   }
-  .card-thumb.no-img {
-    background: var(--bg3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-  }
+  .card-body { flex: 1; padding: 12px; display: flex; align-items: center; gap: 10px; }
+  .card-time { font-size: 11px; color: var(--text2); flex: 1; }
+  .card-audio { font-size: 11px; color: var(--accent2); }
 
-  .card-body {
-    flex: 1;
-    padding: 10px 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-width: 0;
-  }
-
-  .card-comment {
-    font-size: 13px;
-    color: var(--text);
-    line-height: 1.4;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .card-comment.empty { color: var(--text3); font-style: italic; }
-
-  .card-meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 6px;
-  }
-
-  .card-time {
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 0.05em;
-  }
-
-  .card-audio-badge {
-    font-size: 10px;
-    color: var(--accent2);
-    letter-spacing: 0.05em;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-  }
-
-  /* ---- DETAIL KUVA ---- */
+  /* DETAIL */
   #screen-detail {
     background: var(--bg);
-    padding: env(safe-area-inset-top, 20px) 0 env(safe-area-inset-bottom, 20px) 0;
-    display: flex;
-    flex-direction: column;
+    padding: env(safe-area-inset-top,20px) 0 env(safe-area-inset-bottom,20px) 0;
+    display: flex; flex-direction: column;
   }
-
   .detail-header {
-    padding: 16px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;
   }
-
-  .detail-time {
-    font-size: 11px;
-    color: var(--text3);
-    letter-spacing: 0.08em;
+  .detail-time { font-size: 11px; color: var(--text3); letter-spacing: .06em; }
+  .detail-del {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: transparent; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; cursor: pointer; color: var(--text3); transition: all .15s;
   }
-
-  .detail-delete {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: transparent;
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    cursor: pointer;
-    color: var(--text3);
-    transition: all 0.15s;
+  .detail-del:active { border-color: var(--red); color: var(--red); }
+  .detail-body {
+    flex: 1; overflow-y: auto; padding: 0 24px;
+    display: flex; flex-direction: column; gap: 14px;
   }
-  .detail-delete:active { border-color: var(--red); color: var(--red); }
-
-  .detail-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  #detail-img { width: 100%; border-radius: var(--r); border: 1px solid var(--border); display: block; }
+  .detail-audio {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 16px;
+    display: flex; align-items: center; gap: 14px;
   }
-
-  #detail-img {
-    width: 100%;
-    border-radius: var(--radius);
-    display: block;
-    border: 1px solid var(--border);
+  .detail-play {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, #c97aff, #9a3fff);
+    border: none; display: flex; align-items: center; justify-content: center;
+    font-size: 20px; cursor: pointer; flex-shrink: 0; transition: opacity .15s;
   }
-  #detail-img.hidden { display: none; }
+  .detail-play:active { opacity: .8; }
+  .detail-audio-lbl { font-size: 10px; color: var(--text3); letter-spacing: .1em; text-transform: uppercase; }
+  .detail-audio-dur { font-size: 14px; color: var(--text); margin-top: 3px; }
 
-  .detail-audio-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .detail-audio-box.hidden { display: none; }
-
-  .detail-play-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #c97aff 0%, #9a3fff 100%);
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: opacity 0.15s;
-  }
-  .detail-play-btn:active { opacity: 0.8; }
-
-  .detail-audio-info {
-    flex: 1;
-  }
-
-  .detail-audio-label {
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .detail-audio-dur {
-    font-size: 13px;
-    color: var(--text);
-  }
-
-  .detail-comment-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-  }
-  .detail-comment-box.hidden { display: none; }
-
-  .detail-comment-label {
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .detail-comment-text {
-    font-size: 14px;
-    color: var(--text);
-    line-height: 1.65;
-  }
-
-  /* ---- TOAST ---- */
+  /* TOAST */
   .toast {
     position: fixed;
-    bottom: calc(env(safe-area-inset-bottom, 20px) + 80px);
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px 20px;
-    font-size: 12px;
-    color: var(--text);
-    letter-spacing: 0.05em;
-    opacity: 0;
-    transition: all 0.25s ease;
-    pointer-events: none;
-    white-space: nowrap;
-    z-index: 1000;
+    bottom: calc(env(safe-area-inset-bottom,20px) + 90px);
+    left: 50%; transform: translateX(-50%) translateY(16px);
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--rsm); padding: 10px 20px;
+    font-size: 12px; letter-spacing: .04em;
+    opacity: 0; transition: all .22s ease;
+    pointer-events: none; white-space: nowrap; z-index: 1000;
   }
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* ---- CONFIRM DIALOG ---- */
-  .dialog-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: 500;
-    display: flex;
-    align-items: flex-end;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
+  /* DIALOG */
+  .dialog-bg {
+    position: fixed; inset: 0; background: rgba(0,0,0,.7);
+    z-index: 500; display: flex; align-items: flex-end;
+    opacity: 0; pointer-events: none; transition: opacity .2s;
   }
-  .dialog-overlay.show { opacity: 1; pointer-events: all; }
-
+  .dialog-bg.show { opacity: 1; pointer-events: all; }
   .dialog-box {
-    width: 100%;
-    background: var(--bg2);
-    border-top: 1px solid var(--border);
-    border-radius: 20px 20px 0 0;
-    padding: 24px 24px calc(env(safe-area-inset-bottom, 20px) + 24px);
-    transform: translateY(100%);
-    transition: transform 0.25s ease;
+    width: 100%; background: var(--bg2);
+    border-top: 1px solid var(--border); border-radius: 20px 20px 0 0;
+    padding: 24px 24px calc(env(safe-area-inset-bottom,20px) + 24px);
+    transform: translateY(100%); transition: transform .25s ease;
   }
-  .dialog-overlay.show .dialog-box { transform: translateY(0); }
-
-  .dialog-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 8px;
-  }
-
-  .dialog-body {
-    font-size: 13px;
-    color: var(--text2);
-    margin-bottom: 20px;
-    line-height: 1.5;
-  }
-
-  .dialog-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
+  .dialog-bg.show .dialog-box { transform: translateY(0); }
+  .dialog-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .dialog-body { font-size: 13px; color: var(--text2); margin-bottom: 20px; line-height: 1.5; }
+  .dialog-actions { display: flex; flex-direction: column; gap: 10px; }
   .dialog-btn {
-    width: 100%;
-    height: 50px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.15s;
+    width: 100%; height: 50px; border-radius: var(--r); border: 1px solid var(--border);
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; cursor: pointer; transition: all .15s;
   }
+  .dialog-btn.danger { background: rgba(255,90,90,.12); border-color: var(--red); color: var(--red); }
+  .dialog-btn.cancel { background: var(--surface); color: var(--text2); }
 
-  .dialog-btn.danger {
-    background: rgba(240,96,96,0.15);
-    border-color: var(--red);
-    color: var(--red);
-  }
-
-  .dialog-btn.cancel {
-    background: var(--surface);
-    color: var(--text2);
-  }
-
-  /* Scrollbar */
   ::-webkit-scrollbar { width: 3px; }
-  ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 </style>
 </head>
 <body>
 
-<!-- Flash efekt -->
 <div class="flash" id="flash"></div>
 
 <!-- AVAKUVA -->
@@ -831,248 +339,207 @@
     <span class="app-title">Hetk Hetkes</span>
     <span class="idea-count" id="home-count">0 ideed</span>
   </div>
-
   <div class="home-hero">
     <span class="hero-label">Püüa hetk</span>
     <div class="capture-btn" id="btn-open-camera">
       <span class="capture-icon">📸</span>
       <span class="capture-text">Pildista</span>
     </div>
-
   </div>
-
   <div class="home-nav">
-    <div class="nav-btn" id="btn-gallery">
-      <span class="icon">🗂</span>
-      <span>Galerii</span>
-    </div>
+    <div class="nav-btn" id="btn-gallery"><span>🗂</span><span>Galerii</span></div>
   </div>
 </div>
 
-<!-- KAAMERA KUVA -->
+<!-- KAAMERA -->
 <div class="screen" id="screen-camera">
   <video id="video-preview" autoplay playsinline muted></video>
-  <div class="camera-overlay">
-    <div class="camera-top">
-      <div class="camera-close" id="btn-camera-close">✕</div>
+  <div class="cam-overlay">
+    <div class="cam-top">
+      <div class="cam-close" id="btn-cam-close">✕</div>
     </div>
-    <div class="camera-bottom">
-      <div class="flip-btn" id="btn-flip-camera">🔄</div>
-      <div class="shutter-btn" id="btn-shutter">
-        <div class="shutter-btn-inner"></div>
-      </div>
+    <div class="cam-bottom">
+      <div class="flip-btn" id="btn-flip">🔄</div>
+      <div class="shutter-btn" id="btn-shutter"></div>
       <div style="width:48px"></div>
     </div>
   </div>
 </div>
 
-<!-- SALVESTA KUVA -->
+<!-- SALVESTA -->
 <div class="screen" id="screen-save">
   <div class="save-header">
     <div class="back-btn" id="btn-save-back">←</div>
     <span class="save-title">Uus idee</span>
   </div>
-  <div class="save-content">
+  <div class="save-body">
     <img id="captured-img" src="" alt="">
-    <div class="audio-section">
-      <div class="audio-label">Häälkommentaar</div>
-      <div class="audio-controls">
+    <div class="audio-box">
+      <div class="audio-lbl">Häälkommentaar</div>
+      <div class="audio-row">
         <div class="rec-btn" id="btn-record">
           <span class="rec-dot"></span>
-          <span id="rec-btn-text">Alusta salvestust</span>
+          <span id="rec-label">Alusta salvestust</span>
         </div>
         <span class="rec-timer hidden" id="rec-timer">0:00</span>
         <div class="play-btn hidden" id="btn-play-rec">▶</div>
       </div>
     </div>
-
   </div>
   <div class="save-actions">
-    <button class="btn-save" id="btn-save-idea">
-      <span>💾</span>
-      <span>Salvesta idee</span>
-    </button>
+    <button class="btn-save" id="btn-save-idea"><span>💾</span><span>Salvesta idee</span></button>
     <div class="btn-discard" id="btn-discard">🗑</div>
   </div>
 </div>
 
-<!-- GALERII KUVA -->
+<!-- GALERII -->
 <div class="screen" id="screen-gallery">
   <div class="gallery-header">
     <span class="gallery-title">Ideed</span>
     <span class="gallery-count" id="gallery-count">0</span>
   </div>
-  <div class="gallery-list" id="gallery-list">
-    <div class="gallery-empty">
-      <span class="empty-icon">💡</span>
-      <span class="empty-text">Ideid pole veel salvestatud.<br>Vajuta nuppu ja püüa oma esimene hetk.</span>
-    </div>
-  </div>
-  <div class="home-nav" style="padding: 8px 24px 12px">
-    <div class="nav-btn" id="btn-gallery-back">
-      <span class="icon">←</span>
-      <span>Tagasi</span>
-    </div>
+  <div class="gallery-list" id="gallery-list"></div>
+  <div class="home-nav" style="padding:8px 24px 12px">
+    <div class="nav-btn" id="btn-gallery-back"><span>←</span><span>Tagasi</span></div>
   </div>
 </div>
 
-<!-- DETAIL KUVA -->
+<!-- DETAIL -->
 <div class="screen" id="screen-detail">
   <div class="detail-header">
     <div class="back-btn" id="btn-detail-back">←</div>
-    <span class="detail-time" id="detail-time">—</span>
-    <div class="detail-delete" id="btn-delete-idea">🗑</div>
+    <span class="detail-time" id="detail-time"></span>
+    <div class="detail-del" id="btn-delete">🗑</div>
   </div>
-  <div class="detail-content">
-    <img id="detail-img" src="" alt="">
-    <div class="detail-audio-box hidden" id="detail-audio-box">
-      <button class="detail-play-btn" id="btn-detail-play">▶</button>
-      <div class="detail-audio-info">
-        <div class="detail-audio-label">Häälkommentaar</div>
-        <div class="detail-audio-dur" id="detail-audio-dur">—</div>
+  <div class="detail-body">
+    <img id="detail-img" src="" alt="" class="hidden">
+    <div class="detail-audio hidden" id="detail-audio">
+      <button class="detail-play" id="btn-detail-play">▶</button>
+      <div>
+        <div class="detail-audio-lbl">Häälkommentaar</div>
+        <div class="detail-audio-dur" id="detail-dur">—</div>
       </div>
     </div>
-    <div class="detail-comment-box hidden" id="detail-comment-box">
-      <div class="detail-comment-label">Kommentaar</div>
-      <div class="detail-comment-text" id="detail-comment-text"></div>
-    </div>
   </div>
 </div>
 
-<!-- Kustutamise kinnitus -->
-<div class="dialog-overlay" id="dialog-delete">
+<!-- KUSTUTAMISE DIALOG -->
+<div class="dialog-bg" id="dialog">
   <div class="dialog-box">
     <div class="dialog-title">Kustuta idee?</div>
-    <div class="dialog-body">See toiming on pöördumatu. Pilt ja häälkommentaar kustutatakse jäädavalt.</div>
+    <div class="dialog-body">Pilt ja häälkommentaar kustutatakse jäädavalt.</div>
     <div class="dialog-actions">
-      <button class="dialog-btn danger" id="dialog-confirm-delete">Kustuta</button>
-      <button class="dialog-btn cancel" id="dialog-cancel-delete">Tühista</button>
+      <button class="dialog-btn danger" id="btn-confirm-del">Kustuta</button>
+      <button class="dialog-btn cancel" id="btn-cancel-del">Tühista</button>
     </div>
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ============================================================
-// ANDMEBAAS — IndexedDB
-// ============================================================
+'use strict';
+
+// DB
 const DB_NAME = 'HetkeHetked';
-const DB_VERSION = 1;
 let db;
 
 function openDB() {
-  return new Promise((resolve, reject) => {
-    const req = indexedDB.open(DB_NAME, DB_VERSION);
-    req.onupgradeneeded = e => {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open(DB_NAME, 1);
+    r.onupgradeneeded = e => {
       const d = e.target.result;
       if (!d.objectStoreNames.contains('ideed')) {
-        const store = d.createObjectStore('ideed', { keyPath: 'id' });
-        store.createIndex('aeg', 'aeg', { unique: false });
+        d.createObjectStore('ideed', { keyPath: 'id' })
+         .createIndex('aeg', 'aeg', { unique: false });
       }
     };
-    req.onsuccess = e => { db = e.target.result; resolve(db); };
-    req.onerror = e => reject(e);
+    r.onsuccess = e => { db = e.target.result; res(); };
+    r.onerror   = e => rej(e);
   });
 }
-
-function dbAdd(idee) {
-  return new Promise((resolve, reject) => {
+function dbAdd(item) {
+  return new Promise((res, rej) => {
     const tx = db.transaction('ideed', 'readwrite');
-    tx.objectStore('ideed').add(idee);
-    tx.oncomplete = resolve;
-    tx.onerror = reject;
+    tx.objectStore('ideed').add(item);
+    tx.oncomplete = res; tx.onerror = rej;
   });
 }
-
-function dbGetAll() {
-  return new Promise((resolve, reject) => {
+function dbAll() {
+  return new Promise((res, rej) => {
     const tx = db.transaction('ideed', 'readonly');
-    const req = tx.objectStore('ideed').index('aeg').getAll();
-    req.onsuccess = e => resolve(e.target.result.reverse());
-    req.onerror = reject;
+    const r  = tx.objectStore('ideed').index('aeg').getAll();
+    r.onsuccess = e => res(e.target.result.reverse());
+    r.onerror   = rej;
   });
 }
-
-function dbDelete(id) {
-  return new Promise((resolve, reject) => {
+function dbDel(id) {
+  return new Promise((res, rej) => {
     const tx = db.transaction('ideed', 'readwrite');
     tx.objectStore('ideed').delete(id);
-    tx.oncomplete = resolve;
-    tx.onerror = reject;
+    tx.oncomplete = res; tx.onerror = rej;
   });
 }
 
-// ============================================================
-// RAKENDUSE OLEK
-// ============================================================
-let currentScreen = 'home';
+// Olek
 let videoStream = null;
-let facingMode = 'environment';
-let capturedImageData = null;
-let mediaRecorder = null;
+let facingMode  = 'environment';
+let capturedImg = null;
+let recorder    = null;
 let audioChunks = [];
-let audioBlob = null;
-let audioURL = null;
-let recTimerInterval = null;
-let recSeconds = 0;
-let currentDetailId = null;
-let detailAudioURL = null;
+let audioBlob   = null;
+let audioURL    = null;
+let recInterval = null;
+let recSecs     = 0;
+let detailId    = null;
 let detailAudio = null;
 
-// ============================================================
-// NAVIGATSIOON
-// ============================================================
-function showScreen(id) {
+// Navigatsioon
+function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
-  currentScreen = id;
 }
 
-// ============================================================
-// TOAST
-// ============================================================
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2500);
 }
 
-// ============================================================
-// AVAKUVA
-// ============================================================
-async function updateHomeScreen() {
-  const ideed = await dbGetAll();
-  const count = ideed.length;
-  const countEl = document.getElementById('home-count');
-  countEl.textContent = count === 0 ? '0 ideed' : count === 1 ? '1 idee' : `${count} ideed`;
+// Avakuva
+async function refreshHome() {
+  try {
+    const all = await dbAll();
+    const n = all.length;
+    document.getElementById('home-count').textContent =
+      n === 0 ? '0 ideed' : n === 1 ? '1 idee' : n + ' ideed';
+  } catch(e) {}
 }
 
-// ============================================================
-// KAAMERA
-// ============================================================
+// Kaamera
 async function openCamera() {
   try {
-    if (videoStream) stopCamera();
+    stopCamera();
     const stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode, width: { ideal: 1920 }, height: { ideal: 1080 } },
+      video: { facingMode: { ideal: facingMode }, width: { ideal: 1280 }, height: { ideal: 720 } },
       audio: false
     });
     videoStream = stream;
-    document.getElementById('video-preview').srcObject = stream;
-    showScreen('camera');
-  } catch (e) {
-    showToast('Kaamera ei ole kättesaadav');
+    const v = document.getElementById('video-preview');
+    v.srcObject = stream;
+    try { await v.play(); } catch(_) {}
+    show('camera');
+  } catch(e) {
+    toast('Kaamera viga: ' + (e.message || e.name));
   }
 }
 
 function stopCamera() {
-  if (videoStream) {
-    videoStream.getTracks().forEach(t => t.stop());
-    videoStream = null;
-  }
+  if (!videoStream) return;
+  videoStream.getTracks().forEach(t => t.stop());
+  videoStream = null;
+  document.getElementById('video-preview').srcObject = null;
 }
 
 async function flipCamera() {
@@ -1081,338 +548,248 @@ async function flipCamera() {
 }
 
 function takePicture() {
-  const video = document.getElementById('video-preview');
-  const canvas = document.createElement('canvas');
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-  canvas.getContext('2d').drawImage(video, 0, 0);
+  const v = document.getElementById('video-preview');
+  const w = v.videoWidth  || 640;
+  const h = v.videoHeight || 480;
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  c.getContext('2d').drawImage(v, 0, 0, w, h);
 
-  // Flash
-  const flash = document.getElementById('flash');
-  flash.classList.add('active');
-  setTimeout(() => flash.classList.remove('active'), 120);
+  const fl = document.getElementById('flash');
+  fl.classList.add('on');
+  setTimeout(() => fl.classList.remove('on'), 150);
 
-  capturedImageData = canvas.toDataURL('image/jpeg', 0.82);
-  document.getElementById('captured-img').src = capturedImageData;
-
+  capturedImg = c.toDataURL('image/jpeg', 0.80);
+  document.getElementById('captured-img').src = capturedImg;
   stopCamera();
   resetAudio();
-  document.getElementById('comment-input').value = '';
-  showScreen('save');
+  show('save');
 }
 
-// ============================================================
-// HÄÄLSALVESTUS
-// ============================================================
+// Heli
 function resetAudio() {
-  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-    mediaRecorder.stop();
-  }
-  clearInterval(recTimerInterval);
-  audioChunks = [];
-  audioBlob = null;
+  if (recorder && recorder.state !== 'inactive') recorder.stop();
+  recorder = null;
+  clearInterval(recInterval); recInterval = null;
+  audioChunks = []; audioBlob = null;
   if (audioURL) { URL.revokeObjectURL(audioURL); audioURL = null; }
-  recSeconds = 0;
-
-  const btn = document.getElementById('btn-record');
-  btn.className = 'rec-btn';
-  document.getElementById('rec-btn-text').textContent = 'Alusta salvestust';
+  recSecs = 0;
+  document.getElementById('btn-record').className = 'rec-btn';
+  document.getElementById('rec-label').textContent = 'Alusta salvestust';
   document.getElementById('rec-timer').classList.add('hidden');
   document.getElementById('btn-play-rec').classList.add('hidden');
 }
 
-async function toggleRecording() {
-  if (mediaRecorder && mediaRecorder.state === 'recording') {
-    // Peata
-    mediaRecorder.stop();
-    clearInterval(recTimerInterval);
-    const btn = document.getElementById('btn-record');
-    btn.className = 'rec-btn has-audio';
-    document.getElementById('rec-btn-text').textContent = 'Salvestus valmis ✓';
+async function toggleRec() {
+  if (recorder && recorder.state === 'recording') {
+    recorder.stop();
+    clearInterval(recInterval); recInterval = null;
+    document.getElementById('btn-record').className = 'rec-btn done';
+    document.getElementById('rec-label').textContent = 'Salvestus valmis ✓';
     document.getElementById('rec-timer').classList.add('hidden');
-  } else {
-    // Alusta
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      audioChunks = [];
-      const options = MediaRecorder.isTypeSupported('audio/webm') ? { mimeType: 'audio/webm' } : {};
-      mediaRecorder = new MediaRecorder(stream, options);
-      mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
-      mediaRecorder.onstop = () => {
-        stream.getTracks().forEach(t => t.stop());
-        audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
-        audioURL = URL.createObjectURL(audioBlob);
-        document.getElementById('btn-play-rec').classList.remove('hidden');
-      };
-      mediaRecorder.start();
-      recSeconds = 0;
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+    audioChunks = [];
 
-      const btn = document.getElementById('btn-record');
-      btn.className = 'rec-btn recording';
-      document.getElementById('rec-btn-text').textContent = 'Peata salvestus';
-      document.getElementById('rec-timer').classList.remove('hidden');
-
-      recTimerInterval = setInterval(() => {
-        recSeconds++;
-        const m = Math.floor(recSeconds / 60);
-        const s = recSeconds % 60;
-        document.getElementById('rec-timer').textContent = `${m}:${s.toString().padStart(2,'0')}`;
-      }, 1000);
-    } catch (e) {
-      showToast('Mikrofon ei ole kättesaadav');
+    let mime = '';
+    const types = ['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4'];
+    for (const t of types) {
+      if (typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported(t)) { mime = t; break; }
     }
+
+    recorder = new MediaRecorder(stream, mime ? { mimeType: mime } : {});
+    recorder.ondataavailable = e => { if (e.data && e.data.size > 0) audioChunks.push(e.data); };
+    recorder.onstop = () => {
+      stream.getTracks().forEach(t => t.stop());
+      audioBlob = new Blob(audioChunks, { type: mime || 'audio/webm' });
+      audioURL  = URL.createObjectURL(audioBlob);
+      document.getElementById('btn-play-rec').classList.remove('hidden');
+    };
+    recorder.start(200);
+    recSecs = 0;
+
+    document.getElementById('btn-record').className = 'rec-btn recording';
+    document.getElementById('rec-label').textContent = 'Peata salvestus';
+    document.getElementById('rec-timer').classList.remove('hidden');
+    document.getElementById('rec-timer').textContent = '0:00';
+
+    recInterval = setInterval(() => {
+      recSecs++;
+      const m = Math.floor(recSecs / 60);
+      const s = recSecs % 60;
+      document.getElementById('rec-timer').textContent = m + ':' + String(s).padStart(2,'0');
+    }, 1000);
+  } catch(e) {
+    toast('Mikrofon: ' + (e.message || e.name));
   }
 }
 
-function playRecording() {
+function playRec() {
   if (!audioURL) return;
-  const audio = new Audio(audioURL);
-  audio.play();
+  new Audio(audioURL).play().catch(() => toast('Taasesitus ebaõnnestus'));
 }
 
-// ============================================================
-// SALVESTAMINE
-// ============================================================
+// Salvesta
 async function saveIdee() {
-  let heliAndmed = null;
-  let heliMaht = 0;
+  if (!capturedImg) { toast('Pilt puudub'); return; }
+
+  let heliData = null, heliSecs = 0, heliType = null;
   if (audioBlob) {
-    heliAndmed = await blobToBase64(audioBlob);
-    heliMaht = recSeconds;
+    heliData = await toB64(audioBlob);
+    heliSecs = recSecs;
+    heliType = audioBlob.type;
   }
 
   const idee = {
-    id: Date.now(),
-    aeg: Date.now(),
-    pilt: capturedImageData,
-    heli: heliAndmed,
-    heliMaht,
-    heliTyyp: audioBlob ? audioBlob.type : null
+    id: Date.now(), aeg: Date.now(),
+    pilt: capturedImg,
+    heli: heliData, heliSecs, heliType
   };
 
-  await dbAdd(idee);
-  resetAudio();
-  capturedImageData = null;
-  await updateHomeScreen();
-  showScreen('home');
-  showToast('Idee salvestatud ✓');
+  try {
+    await dbAdd(idee);
+    capturedImg = null;
+    resetAudio();
+    await refreshHome();
+    show('home');
+    toast('Idee salvestatud ✓');
+  } catch(e) {
+    toast('Salvestamine ebaõnnestus');
+  }
 }
 
-function blobToBase64(blob) {
-  return new Promise(resolve => {
+function toB64(blob) {
+  return new Promise((res, rej) => {
     const r = new FileReader();
-    r.onload = e => resolve(e.target.result);
+    r.onload  = e => res(e.target.result);
+    r.onerror = rej;
     r.readAsDataURL(blob);
   });
 }
 
-// ============================================================
-// GALERII
-// ============================================================
+// Galerii
 async function openGallery() {
-  const ideed = await dbGetAll();
+  const all  = await dbAll();
   const list = document.getElementById('gallery-list');
-  const countEl = document.getElementById('gallery-count');
-  countEl.textContent = ideed.length;
+  document.getElementById('gallery-count').textContent = all.length;
 
-  if (ideed.length === 0) {
-    list.innerHTML = `<div class="gallery-empty">
-      <span class="empty-icon">💡</span>
-      <span class="empty-text">Ideid pole veel salvestatud.<br>Vajuta nuppu ja püüa oma esimene hetk.</span>
-    </div>`;
+  if (all.length === 0) {
+    list.innerHTML = '<div class="gallery-empty"><span class="empty-icon">💡</span><span class="empty-text">Ideid pole veel.<br>Vajuta ja püüa oma esimene hetk.</span></div>';
   } else {
-    list.innerHTML = ideed.map(idee => {
-      const thumbHTML = idee.pilt
-        ? `<img class="card-thumb" src="${idee.pilt}" alt="">`
-        : `<div class="card-thumb no-img">💡</div>`;
-      const audioHTML = idee.heliMaht
-        ? `<span class="card-audio-badge">🎙 ${formatDuration(idee.heliMaht)}</span>`
-        : '';
-      return `<div class="idea-card" data-id="${idee.id}">
-        ${thumbHTML}
-        <div class="card-body">
-          <div class="card-meta">
-            <span class="card-time">${formatTime(idee.aeg)}</span>
-            ${audioHTML}
-          </div>
-        </div>
-      </div>`;
+    list.innerHTML = all.map(i => {
+      const thumb = i.pilt
+        ? '<img class="card-thumb" src="' + i.pilt + '" alt="">'
+        : '<div class="card-thumb-empty">💡</div>';
+      const audio = i.heliSecs
+        ? '<span class="card-audio">🎙 ' + fmtDur(i.heliSecs) + '</span>' : '';
+      return '<div class="idea-card" data-id="' + i.id + '">' + thumb +
+        '<div class="card-body"><span class="card-time">' + fmtTime(i.aeg) + '</span>' + audio + '</div></div>';
     }).join('');
-
-    list.querySelectorAll('.idea-card').forEach(card => {
-      card.addEventListener('click', () => openDetail(parseInt(card.dataset.id)));
-    });
+    list.querySelectorAll('.idea-card').forEach(el =>
+      el.addEventListener('click', () => openDetail(+el.dataset.id))
+    );
   }
-  showScreen('gallery');
+  show('gallery');
 }
 
-// ============================================================
-// DETAIL
-// ============================================================
+// Detail
 async function openDetail(id) {
-  const ideed = await dbGetAll();
-  const idee = ideed.find(i => i.id === id);
+  const all  = await dbAll();
+  const idee = all.find(i => i.id === id);
   if (!idee) return;
+  detailId = id;
 
-  currentDetailId = id;
-
-  document.getElementById('detail-time').textContent = formatTimeFull(idee.aeg);
+  document.getElementById('detail-time').textContent = fmtFull(idee.aeg);
 
   const img = document.getElementById('detail-img');
-  if (idee.pilt) {
-    img.src = idee.pilt;
-    img.classList.remove('hidden');
-  } else {
-    img.classList.add('hidden');
-  }
+  if (idee.pilt) { img.src = idee.pilt; img.classList.remove('hidden'); }
+  else           { img.classList.add('hidden'); }
 
-  const audioBox = document.getElementById('detail-audio-box');
+  const abox = document.getElementById('detail-audio');
   if (idee.heli) {
-    audioBox.classList.remove('hidden');
-    document.getElementById('detail-audio-dur').textContent = formatDuration(idee.heliMaht);
-    if (detailAudioURL) URL.revokeObjectURL(detailAudioURL);
-    const blob = base64ToBlob(idee.heli, idee.heliTyyp || 'audio/webm');
-    detailAudioURL = URL.createObjectURL(blob);
-    detailAudio = new Audio(detailAudioURL);
+    abox.classList.remove('hidden');
+    document.getElementById('detail-dur').textContent = fmtDur(idee.heliSecs);
+    if (detailAudio) { detailAudio.pause(); detailAudio = null; }
+    const blob = b64Blob(idee.heli, idee.heliType || 'audio/webm');
+    detailAudio = new Audio(URL.createObjectURL(blob));
   } else {
-    audioBox.classList.add('hidden');
-    detailAudioURL = null;
+    abox.classList.add('hidden');
     detailAudio = null;
   }
-
-  const commentBox = document.getElementById('detail-comment-box');
-  commentBox.classList.add('hidden');
-
-  showScreen('detail');
+  show('detail');
 }
 
-function base64ToBlob(base64, type) {
-  const parts = base64.split(',');
-  const binary = atob(parts[1]);
-  const arr = new Uint8Array(binary.length);
-  for (let i = 0; i < binary.length; i++) arr[i] = binary.charCodeAt(i);
+function b64Blob(b64, type) {
+  const bin = atob(b64.split(',')[1]);
+  const arr = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
   return new Blob([arr], { type });
 }
 
-// ============================================================
-// KUSTUTAMINE
-// ============================================================
-function showDeleteDialog() {
-  document.getElementById('dialog-delete').classList.add('show');
-}
+// Kustuta
+function showDialog()  { document.getElementById('dialog').classList.add('show'); }
+function hideDialog()  { document.getElementById('dialog').classList.remove('show'); }
 
-function hideDeleteDialog() {
-  document.getElementById('dialog-delete').classList.remove('show');
-}
-
-async function confirmDelete() {
-  await dbDelete(currentDetailId);
-  hideDeleteDialog();
-  await updateHomeScreen();
-  showToast('Idee kustutatud');
+async function doDelete() {
+  await dbDel(detailId);
+  if (detailAudio) { detailAudio.pause(); detailAudio = null; }
+  hideDialog();
+  await refreshHome();
+  toast('Idee kustutatud');
   await openGallery();
 }
 
-// ============================================================
-// APUÜTIIDFUNKTSIOONID
-// ============================================================
-function formatTime(ts) {
+// Abifunktsioonid
+function fmtTime(ts) {
+  const d = Date.now() - ts;
+  if (d < 60e3)    return 'Äsja';
+  if (d < 3600e3)  return Math.floor(d/60e3)  + ' min tagasi';
+  if (d < 86400e3) return Math.floor(d/3600e3) + ' h tagasi';
+  return new Date(ts).toLocaleDateString('et-EE', { day:'numeric', month:'short' });
+}
+function fmtFull(ts) {
   const d = new Date(ts);
-  const now = new Date();
-  const diff = now - d;
-  if (diff < 60000) return 'Äsja';
-  if (diff < 3600000) return `${Math.floor(diff/60000)} min tagasi`;
-  if (diff < 86400000) return `${Math.floor(diff/3600000)} h tagasi`;
-  return d.toLocaleDateString('et-EE', { day: 'numeric', month: 'short' });
+  return d.toLocaleDateString('et-EE', { day:'numeric', month:'long', year:'numeric' })
+       + ' · ' + d.toLocaleTimeString('et-EE', { hour:'2-digit', minute:'2-digit' });
+}
+function fmtDur(s) {
+  if (!s) return '0:00';
+  return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
 }
 
-function formatTimeFull(ts) {
-  const d = new Date(ts);
-  return d.toLocaleDateString('et-EE', { day: 'numeric', month: 'long', year: 'numeric' })
-    + ' · ' + d.toLocaleTimeString('et-EE', { hour: '2-digit', minute: '2-digit' });
-}
-
-function formatDuration(secs) {
-  if (!secs) return '0:00';
-  const m = Math.floor(secs / 60);
-  const s = secs % 60;
-  return `${m}:${s.toString().padStart(2,'0')}`;
-}
-
-function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-// ============================================================
-// EVENT LISTENERS
-// ============================================================
-
-// Avakuva
+// Sündmused
 document.getElementById('btn-open-camera').addEventListener('click', openCamera);
 document.getElementById('btn-gallery').addEventListener('click', openGallery);
-
-// Kaamera
-document.getElementById('btn-camera-close').addEventListener('click', () => {
-  stopCamera();
-  showScreen('home');
-});
+document.getElementById('btn-cam-close').addEventListener('click', () => { stopCamera(); show('home'); });
 document.getElementById('btn-shutter').addEventListener('click', takePicture);
-document.getElementById('btn-flip-camera').addEventListener('click', flipCamera);
-
-// Salvesta kuva
-document.getElementById('btn-save-back').addEventListener('click', () => {
-  resetAudio();
-  showScreen('home');
-});
-document.getElementById('btn-record').addEventListener('click', toggleRecording);
-document.getElementById('btn-play-rec').addEventListener('click', playRecording);
+document.getElementById('btn-flip').addEventListener('click', flipCamera);
+document.getElementById('btn-save-back').addEventListener('click', () => { resetAudio(); capturedImg = null; show('home'); });
+document.getElementById('btn-record').addEventListener('click', toggleRec);
+document.getElementById('btn-play-rec').addEventListener('click', playRec);
 document.getElementById('btn-save-idea').addEventListener('click', saveIdee);
-document.getElementById('btn-discard').addEventListener('click', () => {
-  resetAudio();
-  capturedImageData = null;
-  showScreen('home');
-});
-
-// Galerii
-document.getElementById('btn-gallery-back').addEventListener('click', () => showScreen('home'));
-
-// Detail
-document.getElementById('btn-detail-back').addEventListener('click', () => {
-  if (detailAudio) detailAudio.pause();
-  openGallery();
-});
+document.getElementById('btn-discard').addEventListener('click', () => { resetAudio(); capturedImg = null; show('home'); });
+document.getElementById('btn-gallery-back').addEventListener('click', () => show('home'));
+document.getElementById('btn-detail-back').addEventListener('click', () => { if (detailAudio) detailAudio.pause(); openGallery(); });
 document.getElementById('btn-detail-play').addEventListener('click', () => {
-  if (detailAudio) {
-    detailAudio.currentTime = 0;
-    detailAudio.play();
-  }
+  if (!detailAudio) return;
+  detailAudio.currentTime = 0;
+  detailAudio.play().catch(() => toast('Taasesitus ebaõnnestus'));
 });
-document.getElementById('btn-delete-idea').addEventListener('click', showDeleteDialog);
-
-// Dialog
-document.getElementById('dialog-confirm-delete').addEventListener('click', confirmDelete);
-document.getElementById('dialog-cancel-delete').addEventListener('click', hideDeleteDialog);
-document.getElementById('dialog-delete').addEventListener('click', e => {
-  if (e.target === document.getElementById('dialog-delete')) hideDeleteDialog();
+document.getElementById('btn-delete').addEventListener('click', showDialog);
+document.getElementById('btn-confirm-del').addEventListener('click', doDelete);
+document.getElementById('btn-cancel-del').addEventListener('click', hideDialog);
+document.getElementById('dialog').addEventListener('click', e => {
+  if (e.target === document.getElementById('dialog')) hideDialog();
 });
 
-// ============================================================
-// KÄIVITUS
-// ============================================================
-openDB().then(() => {
-  updateHomeScreen();
-}).catch(e => {
-  console.error('DB viga:', e);
-  showToast('Salvestusviga — proovi uuesti');
-});
+// Käivitus
+openDB().then(refreshHome).catch(() => toast('Andmebaasi viga'));
 
-// Service Worker registreerimine (töötab ainult päris serveris / telefonis)
-if ('serviceWorker' in navigator && location.protocol !== 'blob:' && !location.hostname.includes('claudeusercontent')) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
-  });
+if ('serviceWorker' in navigator && !location.hostname.includes('claudeusercontent')) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
 }
 </script>
-
 </body>
 </html>

@@ -2,23 +2,24 @@
   "name": "Hetk Hetkes",
   "short_name": "Hetk Hetkes",
   "description": "Kiire ideede salvestaja — pilt ja hääl",
-  "start_url": "./index.html",
+  "start_url": "/hetk-hetkes/",
+  "scope": "/hetk-hetkes/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0a0a0f",
-  "theme_color": "#0a0a0f",
+  "background_color": "#1a0f2e",
+  "theme_color": "#1a0f2e",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
