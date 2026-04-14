@@ -6,8 +6,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Hetk Hetkes">
-<meta name="theme-color" content="#0a0a0f">
+<meta name="theme-color" content="#1a0f2e">
 <link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>Hetk Hetkes</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap');
@@ -431,49 +432,7 @@
   }
   .rec-timer.hidden { display: none; }
 
-  /* Tekstikommentaar */
-  .comment-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-  }
 
-  .comment-label {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text3);
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .optional-tag {
-    font-size: 9px;
-    color: var(--text3);
-    background: var(--bg3);
-    padding: 2px 7px;
-    border-radius: 4px;
-    letter-spacing: 0.08em;
-  }
-
-  #comment-input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 14px;
-    line-height: 1.6;
-    resize: none;
-    min-height: 60px;
-    caret-color: var(--accent);
-  }
-
-  #comment-input::placeholder { color: var(--text3); }
 
   /* Salvesta nupp */
   .save-actions {
@@ -926,13 +885,7 @@
         <div class="play-btn hidden" id="btn-play-rec">▶</div>
       </div>
     </div>
-    <div class="comment-section">
-      <div class="comment-label">
-        <span>Kommentaar</span>
-        <span class="optional-tag">vabatahtlik</span>
-      </div>
-      <textarea id="comment-input" placeholder="Lisa märkus..." rows="2"></textarea>
-    </div>
+
   </div>
   <div class="save-actions">
     <button class="btn-save" id="btn-save-idea">
@@ -1221,8 +1174,6 @@ function playRecording() {
 // SALVESTAMINE
 // ============================================================
 async function saveIdee() {
-  const comment = document.getElementById('comment-input').value.trim();
-
   let heliAndmed = null;
   let heliMaht = 0;
   if (audioBlob) {
@@ -1236,8 +1187,7 @@ async function saveIdee() {
     pilt: capturedImageData,
     heli: heliAndmed,
     heliMaht,
-    heliTyyp: audioBlob ? audioBlob.type : null,
-    kommentaar: comment
+    heliTyyp: audioBlob ? audioBlob.type : null
   };
 
   await dbAdd(idee);
@@ -1275,16 +1225,12 @@ async function openGallery() {
       const thumbHTML = idee.pilt
         ? `<img class="card-thumb" src="${idee.pilt}" alt="">`
         : `<div class="card-thumb no-img">💡</div>`;
-      const commentHTML = idee.kommentaar
-        ? `<span class="card-comment">${escHtml(idee.kommentaar)}</span>`
-        : `<span class="card-comment empty">Kommentaar puudub</span>`;
       const audioHTML = idee.heliMaht
         ? `<span class="card-audio-badge">🎙 ${formatDuration(idee.heliMaht)}</span>`
         : '';
       return `<div class="idea-card" data-id="${idee.id}">
         ${thumbHTML}
         <div class="card-body">
-          ${commentHTML}
           <div class="card-meta">
             <span class="card-time">${formatTime(idee.aeg)}</span>
             ${audioHTML}
@@ -1335,12 +1281,7 @@ async function openDetail(id) {
   }
 
   const commentBox = document.getElementById('detail-comment-box');
-  if (idee.kommentaar) {
-    commentBox.classList.remove('hidden');
-    document.getElementById('detail-comment-text').textContent = idee.kommentaar;
-  } else {
-    commentBox.classList.add('hidden');
-  }
+  commentBox.classList.add('hidden');
 
   showScreen('detail');
 }
