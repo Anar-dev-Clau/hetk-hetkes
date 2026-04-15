@@ -348,6 +348,7 @@
   </div>
   <div class="home-nav">
     <div class="nav-btn" id="btn-gallery"><span>🗂</span><span>Galerii</span></div>
+    <div class="nav-btn" id="btn-close" style="flex:0;width:48px"><span>✕</span></div>
   </div>
 </div>
 
@@ -762,6 +763,7 @@ function fmtDur(s) {
 // Sündmused
 document.getElementById('btn-open-camera').addEventListener('click', openCamera);
 document.getElementById('btn-gallery').addEventListener('click', openGallery);
+document.getElementById('btn-close').addEventListener('click', () => window.close());
 document.getElementById('btn-cam-close').addEventListener('click', () => { stopCamera(); show('home'); });
 document.getElementById('btn-shutter').addEventListener('click', takePicture);
 document.getElementById('btn-flip').addEventListener('click', flipCamera);
